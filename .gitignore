@@ -1,0 +1,27 @@
+# Dados (baixar via scripts/download_data.py ou Kaggle)
+data/raw/*
+data/processed/*
+data/vectorstore/*
+!data/**/.gitkeep
+
+# Segredos
+.env
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+*.egg-info/
+.pytest_cache/
+.ipynb_checkpoints/
+
+# Resultados de avaliação gerados
+evaluation/results/*
+!evaluation/results/.gitkeep
+
+# IDE / SO
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db

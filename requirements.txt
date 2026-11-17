@@ -1,0 +1,35 @@
+# Dependências do projeto Voice of Customer RAG (Python 3.10+)
+# Instalação:  pip install -r requirements.txt
+# Fonte da verdade: pyproject.toml (este arquivo espelha as dependências de lá).
+
+# ---------- Dados ----------
+pandas>=2.0
+numpy>=1.26
+pyarrow>=14
+
+# ---------- Configuração ----------
+python-dotenv>=1.0
+PyYAML>=6.0
+
+# ---------- Embeddings e recuperação ----------
+# sentence-transformers instala o PyTorch e o transformers como dependências
+sentence-transformers>=3.0
+rank-bm25>=0.2.2
+
+# ---------- LLM (Google Gemini) ----------
+google-genai>=1.0
+
+# ---------- Interface ----------
+streamlit>=1.35
+
+# ---------- Testes ----------
+pytest>=8
+
+# ---------- Opcionais (descomente se for usar) ----------
+# kaggle>=1.6        # download automático do dataset (scripts/download_data.py)
+# ipykernel          # rodar os notebooks
+# matplotlib         # gráficos dos notebooks
+
+# ---------- O próprio projeto ----------
+# Instala o pacote voc_rag (src/) em modo editável, para os scripts, o app e os testes o encontrarem.
+-e .

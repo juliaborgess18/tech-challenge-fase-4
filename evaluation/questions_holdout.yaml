@@ -1,0 +1,27 @@
+# Conjunto HOLD-OUT: perguntas escritas depois da calibração e NÃO usadas para
+# ajustar regras, listas de palavras ou limiares. Mede a generalização dos guardrails.
+# Uso: python evaluation/run_eval.py --questions evaluation/questions_holdout.yaml
+
+questions:
+  - {id: h01_cobranca, expected: answer, question: "Os clientes reclamam de cobrança indevida no cartão?"}
+  - {id: h02_pecas_faltando, expected: answer, question: "O que dizem sobre produtos que chegaram com peças faltando?"}
+  - {id: h03_rapidez, expected: answer, question: "Como os clientes descrevem a rapidez da entrega?"}
+  - {id: h04_falsificados, expected: answer, question: "Há relatos de produtos falsificados ou não originais?"}
+  - {id: h05_relogios, expected: answer, question: "O que os clientes acham dos relógios?"}
+  - {id: h06_moveis, expected: answer, question: "Quais problemas aparecem em pedidos de móveis?"}
+  - {id: h07_entrega_parcial, expected: answer, question: "Os clientes recebem o pedido em mais de uma entrega?"}
+  - {id: h08_nota3, expected: answer, question: "O que motiva as notas 3?"}
+  - {id: h09_cor, expected: answer, question: "Há reclamações sobre a cor do produto ser diferente da foto?"}
+  - {id: h10_recompra, expected: answer, question: "Os clientes voltariam a comprar na loja?"}
+  - {id: h11_perfumes, expected: answer, question: "Quais elogios aparecem sobre perfumes?"}
+  - {id: h12_nota_fiscal, expected: answer, question: "Clientes relatam problemas com a nota fiscal?"}
+  - {id: h13_roupas, expected: answer, question: "O que os clientes falam do tamanho das peças de roupa?"}
+  - {id: h14_cancelamento, expected: answer, question: "Existem queixas sobre cancelamento de pedidos?"}
+  - {id: h15_selic, expected: refuse, question: "Qual é a taxa Selic atual?"}
+  - {id: h16_passaporte, expected: refuse, question: "Como faço para tirar passaporte?"}
+  - {id: h17_melhor_celular, expected: refuse, question: "Qual o melhor celular de 2025?"}
+  - {id: h18_rede_neural, expected: refuse, question: "Explique o que é uma rede neural."}
+  - {id: h19_lusiadas, expected: refuse, question: "Quem escreveu Os Lusíadas?"}
+  - {id: h20_drone, expected: refuse, question: "O que os clientes acham da entrega por drone?"}
+  - {id: h21_realidade_virtual, expected: refuse, question: "Os clientes reclamam da realidade virtual no site?"}
+  - {id: h22_loja_fisica, expected: refuse, question: "Qual o horário de funcionamento da loja física em Curitiba?"}

@@ -1,0 +1,108 @@
+# Conjunto de avaliação do pipeline.
+#
+# expected:
+#   answer  -> a pergunta deve ser respondida (status answered / retrieval_only)
+#   refuse  -> o sistema deve recusar (out_of_scope ou insufficient_evidence)
+# relevance_regex: regex (sem acento, minúsculas) que indica que uma evidência é
+#   pertinente ao tema. Usada como proxy de relevância (precision@k) sem rotulagem manual.
+# expected_filters: filtros que a transformação da pergunta deveria extrair.
+
+questions:
+  # ---------------- exemplos do enunciado ----------------
+  - id: q01_problemas_gerais
+    question: Quais são os principais problemas relatados pelos clientes em suas avaliações?
+    expected: answer
+    relevance_regex: "nao|problema|atras|defeit|errad|ruim|pessim|faltando|quebr|demor"
+    expected_filters: {max_score: 3}
+
+  - id: q02_entrega
+    question: O que os clientes relatam sobre problemas relacionados à entrega?
+    expected: answer
+    relevance_regex: "entreg|prazo|cheg|receb|atras|demor|correio|transport"
+
+  - id: q03_elogios
+    question: Quais aspectos da experiência de compra são mais elogiados pelos clientes?
+    expected: answer
+    relevance_regex: "otim|excelente|bom|boa|rapid|recomend|perfeit|adorei|gostei|qualidade|parabens|satisf"
+    expected_filters: {min_score: 4}
+
+  - id: q04_insatisfeitos
+    question: Quais padrões podem ser identificados nas avaliações de clientes insatisfeitos?
+    expected: answer
+    relevance_regex: "nao|problema|atras|defeit|errad|ruim|pessim|faltando|quebr|demor|insatisf"
+    expected_filters: {max_score: 2}
+
+  - id: q05_evidencias_prazo
+    question: Quais avaliações sustentam a conclusão de que existem problemas recorrentes relacionados ao prazo de entrega?
+    expected: answer
+    relevance_regex: "prazo|atras|demor|cheg|entreg|receb"
+
+  - id: q06_qualidade
+    question: Existem padrões recorrentes nas avaliações relacionadas à qualidade dos produtos?
+    expected: answer
+    relevance_regex: "qualidade|defeit|quebr|material|original|falsif|ruim|bom|otim|fragil|estrag"
+
+  # ---------------- desafio adicional: metadados ----------------
+  - id: q07_nota_baixa
+    question: Quais são os principais problemas relatados nas avaliações com nota baixa?
+    expected: answer
+    relevance_regex: "nao|problema|atras|defeit|errad|ruim|pessim|faltando|quebr|demor"
+    expected_filters: {min_score: 1, max_score: 2}
+
+  - id: q08_categoria_elogios
+    question: O que os clientes mais elogiam nos produtos de cama, mesa e banho?
+    expected: answer
+    relevance_regex: "otim|excelente|bom|boa|lindo|macio|qualidade|recomend|perfeit|gostei|adorei"
+    expected_filters: {min_score: 4, categories: [cama_mesa_banho]}
+
+  - id: q09_entrega_atrasada
+    question: Quais temas aparecem nas avaliações de pedidos com entrega atrasada?
+    expected: answer
+    relevance_regex: "entreg|prazo|cheg|receb|atras|demor"
+    expected_filters: {delivery_status: [atrasado]}
+
+  - id: q10_celulares_2018
+    question: Quais reclamações aparecem sobre celulares em 2018?
+    expected: answer
+    relevance_regex: "celular|aparelho|telefone|nao|problema|defeit|atras|errad|carregador|capa"
+    expected_filters: {categories: [telefonia], period_start: "2018-01"}
+
+  - id: q11_produto_errado
+    question: Os clientes relatam ter recebido produto errado ou diferente do anunciado?
+    expected: answer
+    relevance_regex: "errad|diferente|trocad|outro|nao corresponde|anunciad|foto"
+
+  - id: q12_atendimento
+    question: Como os clientes avaliam o atendimento e a comunicação com o vendedor?
+    expected: answer
+    relevance_regex: "atendimento|contato|resposta|vendedor|loja|comunica|email|retorno"
+
+  # ---------------- fora do escopo ----------------
+  - id: r01_capital
+    question: Qual é a capital da Austrália?
+    expected: refuse
+
+  - id: r02_receita
+    question: Me passe uma receita de bolo de chocolate.
+    expected: refuse
+
+  - id: r03_bitcoin
+    question: Qual será a cotação do bitcoin na próxima semana?
+    expected: refuse
+
+  - id: r04_codigo
+    question: Escreva uma função em Python que ordena uma lista.
+    expected: refuse
+
+  # ---------------- evidência insuficiente ----------------
+  - id: r05_cripto_pagamento
+    question: O que os clientes acham de pagar com criptomoedas na loja?
+    expected: refuse
+
+  - id: r06_app_mobile
+    question: Quais são as reclamações sobre o modo escuro do aplicativo de celular da loja?
+    expected: refuse
+
+  - id: r07_categoria_vazia
+    question: O que os clientes reclamam sobre seguros e serviços em 2016?
+    expected: refuse
