@@ -26,13 +26,22 @@ st.set_page_config(page_title="Voice of Customer RAG", page_icon="💬", layout=
 
 def secrets_to_env() -> None:
     """No Streamlit Cloud a configuração vem dos Secrets (não há .env): copia para o ambiente,
-    onde o config.py lê. Localmente o .env tem prioridade e, sem secrets.toml, nada acontece."""
+    onde o config.py lê. Aceita chaves na raiz ou dentro de uma seção ([gemini], [llm]...) e nomes
+    em minúsculas. Localmente o .env tem prioridade e, sem secrets.toml, nada acontece."""
     try:
-        for key, value in st.secrets.items():
-            if isinstance(value, (str, int, float, bool)) and not os.environ.get(key):
-                os.environ[key] = str(value)
+        items = list(st.secrets.items())
     except Exception:  # sem secrets.toml (execução local)
-        pass
+        return
+    flat: list[tuple[str, object]] = []
+    for key, value in items:
+        if hasattr(value, "items"):  # seção do TOML
+            flat.extend(value.items())
+        else:
+            flat.append((key, value))
+    for key, value in flat:
+        name = str(key).strip().upper()
+        if isinstance(value, (str, int, float, bool)) and not os.environ.get(name):
+            os.environ[name] = str(value).strip()
 
 
 secrets_to_env()
@@ -183,9 +192,11 @@ with st.sidebar:
     top_k = st.slider("Evidências no contexto", 5, 30, pipeline.settings.top_k_context)
 
     st.divider()
+    missing = [n for n, v in (("LLM_API_KEY", pipeline.llm.api_key), ("LLM_MODEL", pipeline.llm.model)) if not v]
+    llm_label = "`" + pipeline.llm.model + "`" if not missing else "não configurado (faltando: " + ", ".join(missing) + ")"
     st.caption(
         f"Base: **{len(docs):,}** avaliações".replace(",", ".") + f" com texto · Embeddings: `{pipeline.settings.embedding_model}` · "
-        f"LLM: {'`' + pipeline.llm.model + '`' if pipeline.llm.is_configured else 'não configurado'}"
+        f"LLM: {llm_label}"
     )
 
 manual_filter = MetadataFilter(
