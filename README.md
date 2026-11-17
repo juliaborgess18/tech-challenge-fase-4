@@ -137,6 +137,8 @@ cp .env.example .env
 streamlit run app/streamlit_app.py
 ```
 
+Na barra lateral, o interruptor **"Gerar resposta com o Gemini"** alterna entre a resposta completa (com citações) e o modo **somente recuperação**, que mostra as avaliações encontradas e o trace sem chamar o LLM. Esse modo não gasta cota e é útil para comparar o RAG com e sem a geração.
+
 ```bash
 python scripts/ask.py "Quais são os principais problemas relatados pelos clientes?" --trace
 python scripts/ask.py "O que os clientes elogiam?" --categoria cama_mesa_banho --nota-min 4

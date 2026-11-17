@@ -178,6 +178,23 @@ docs = pipeline.store.documents
 
 # ------------------------------------------------------------------ sidebar
 with st.sidebar:
+    st.header("Modo de resposta")
+    llm_ready = pipeline.llm.is_configured
+    use_llm = st.toggle(
+        "Gerar resposta com o Gemini",
+        value=llm_ready,
+        disabled=not llm_ready,
+        key="use_llm",
+        help=(
+            "Ligado: o Gemini escreve a resposta citando as avaliações [E1], [E2]…\n\n"
+            "Desligado: só a recuperação — mostra as avaliações encontradas e o trace, sem chamar o LLM "
+            "(não gasta cota)."
+            if llm_ready
+            else "Configure LLM_API_KEY e LLM_MODEL (no .env ou nos Secrets) para ativar."
+        ),
+    )
+    use_llm = use_llm and llm_ready
+
     st.header("Filtros de metadados")
     auto_filters = st.toggle(
         "Extrair filtros da pergunta",
@@ -209,11 +226,21 @@ manual_filter = MetadataFilter(
 )
 
 if run and question.strip():
-    resp = ask_with_progress(pipeline, question, filters=manual_filter, auto_filters=auto_filters, top_k=top_k)
+    resp = ask_with_progress(
+        pipeline, question, filters=manual_filter, auto_filters=auto_filters, top_k=top_k, generate=use_llm
+    )
 
     kind, label = STATUS_UI[resp.status.value]
-    getattr(st, kind)(label)
-    st.markdown(resp.answer)
+    if resp.status.value == "retrieval_only" and llm_ready and not use_llm:
+        # o usuário desligou o Gemini de propósito
+        st.info("Somente recuperação (Gemini desligado)")
+        st.markdown(
+            "Abaixo estão as avaliações que a busca encontrou — exatamente o contexto que seria enviado ao Gemini. "
+            "Ligue **Gerar resposta com o Gemini** na barra lateral para ver a resposta escrita com as citações."
+        )
+    else:
+        getattr(st, kind)(label)
+        st.markdown(resp.answer)
     for w in resp.warnings:
         st.warning(w)
 
