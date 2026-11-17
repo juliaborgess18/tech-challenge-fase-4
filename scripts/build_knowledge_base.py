@@ -1,4 +1,4 @@
-"""Etapa 1 — Constrói a base de conhecimento (data/processed/documents.parquet).
+"""Etapa 1: constrói a base de conhecimento (data/processed/documents.parquet).
 
 Uso:
     python scripts/build_knowledge_base.py

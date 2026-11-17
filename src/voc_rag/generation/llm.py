@@ -98,20 +98,20 @@ class LLMClient:
                 response = request(with_thinking=False)
         except errors.APIError as exc:
             raise LLMUnavailableError(
-                f"Falha ao chamar o Gemini ({exc.code} {exc.status}): {exc.message} "
-                "— exibindo apenas as avaliações recuperadas."
+                f"Falha ao chamar o Gemini ({exc.code} {exc.status}): {exc.message}; "
+                "exibindo apenas as avaliações recuperadas."
             ) from exc
         except Exception as exc:  # timeout / rede
             raise LLMUnavailableError(
-                f"Falha de conexão com o Gemini ({type(exc).__name__}) "
-                "— exibindo apenas as avaliações recuperadas."
+                f"Falha de conexão com o Gemini ({type(exc).__name__}); "
+                "exibindo apenas as avaliações recuperadas."
             ) from exc
 
         text = response.text
         if not text:
             reason = response.candidates[0].finish_reason if response.candidates else "desconhecido"
             raise LLMUnavailableError(
-                f"O Gemini não retornou texto (finish_reason={reason}) "
-                "— exibindo apenas as avaliações recuperadas."
+                f"O Gemini não retornou texto (finish_reason={reason}); "
+                "exibindo apenas as avaliações recuperadas."
             )
         return text

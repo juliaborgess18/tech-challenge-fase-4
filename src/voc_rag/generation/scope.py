@@ -6,7 +6,7 @@ calibração, "Me passe uma receita de bolo" teve similaridade 0,90 com a melhor
 avaliação, MAIOR que várias perguntas legítimas (~0,86). Um limiar absoluto
 não separa as classes.
 
-Solução: comparar a pergunta com dois conjuntos de perguntas-exemplo — dentro do
+Solução: comparar a pergunta com dois conjuntos de perguntas-exemplo: dentro do
 escopo (experiência de compra) e fora dele (conhecimentos gerais, código, finanças,
 receitas...). Comparar pergunta com pergunta é uma tarefa simétrica, que o E5
 separa bem. A margem = média dos 3 exemplos mais próximos (escopo) − idem (fora).

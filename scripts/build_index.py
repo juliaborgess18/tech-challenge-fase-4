@@ -1,4 +1,4 @@
-"""Etapa 2 — Gera os embeddings dos documentos e persiste o índice vetorial.
+"""Etapa 2: gera os embeddings dos documentos e persiste o índice vetorial.
 
 Uso:
     python scripts/build_index.py            # base completa

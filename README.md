@@ -127,7 +127,7 @@ Depois, crie o seu `.env` a partir do modelo e cole a chave em `LLM_API_KEY`:
 cp .env.example .env
 ```
 
-> ⚠️ A chave é pessoal: guarde-a só no `.env` (que já está no `.gitignore`) e nunca a coloque no código, no README ou em commits.
+> **Atenção:** a chave é pessoal: guarde-a só no `.env` (que já está no `.gitignore`) e nunca a coloque no código, no README ou em commits.
 
 **Sem o LLM configurado, todo o pipeline funciona em modo "somente recuperação"**: a interface e a CLI mostram as evidências recuperadas, o trace e o contexto que seria enviado ao modelo.
 
@@ -230,11 +230,11 @@ O script [`run_eval.py`](evaluation/run_eval.py) calcula as métricas de recuper
 | Decisão correta (responder × recusar) | 19/19 (100%) | 21/22 (95%)¹ |
 | Perguntas válidas respondidas | 12/12 | 14/14 |
 | Perguntas a recusar recusadas | 7/7 | 7/8 |
-| Precisão@15 das evidências (proxy por tema) | 0,92 | — |
-| Filtros extraídos corretamente | 6/6 | — |
+| Precisão@15 das evidências (proxy por tema) | 0,92 | - |
+| Filtros extraídos corretamente | 6/6 | - |
 | Evidências que respeitam os filtros | 100% | 100% |
 
-¹ **Leitura honesta:** na primeira execução do hold-out o resultado foi **19/22**. Dois erros revelaram falhas genéricas, que foram corrigidas: "não" tratado como termo-chave, e perguntas sem tema sobre um recorte filtrado ("O que motiva as notas 3?"). Depois da correção o resultado passou a 21/22, mas esse número já não é totalmente independente. O erro restante, "realidade virtual no site", passa porque "loja **virtual**" e "**site**" são frequentes nas avaliações. É o tipo de caso em que a segunda barreira (o LLM declarar que as evidências não sustentam a resposta) é necessária.
+¹ Na primeira execução do hold-out o resultado foi **19/22**. Dois erros revelaram falhas genéricas, que foram corrigidas: "não" tratado como termo-chave, e perguntas sem tema sobre um recorte filtrado ("O que motiva as notas 3?"). Depois da correção o resultado passou a 21/22, mas esse número já não é totalmente independente. O erro restante, "realidade virtual no site", passa porque "loja **virtual**" e "**site**" são frequentes nas avaliações. É o tipo de caso em que a segunda barreira (o LLM declarar que as evidências não sustentam a resposta) é necessária.
 
 A precisão@15 é uma aproximação: mede a fração das evidências cujo texto trata do tema da pergunta, por regex. Não substitui a avaliação humana da relevância.
 

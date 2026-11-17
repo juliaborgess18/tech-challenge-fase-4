@@ -98,7 +98,7 @@ O E5 produz cossenos altos para qualquer par de textos (anisotropia), e pergunta
 | 2 | **Classificador de escopo** | margem < 0 **e** suporte lexical < 3 | `out_of_scope` | "capital da Austrália", "receita de bolo", "taxa Selic" |
 | 3 | **Vocabulário** | algum termo-chave aparece em menos de 3 avaliações | `insufficient_evidence` | "criptomoedas", "Curitiba" |
 | 4 | **Suporte lexical** | menos de 3 avaliações (no recorte) contêm 60% dos termos-chave | `insufficient_evidence` | "entrega por drone", "modo escuro do aplicativo" |
-| 5 | Suporte semântico | menos de 3 candidatos com similaridade ≥ 0,85 (não se aplica a perguntas sem tema sobre um recorte filtrado) | `insufficient_evidence` | — |
+| 5 | Suporte semântico | menos de 3 candidatos com similaridade ≥ 0,85 (não se aplica a perguntas sem tema sobre um recorte filtrado) | `insufficient_evidence` | - |
 
 - **Classificador de escopo** ([scope.py](../src/voc_rag/generation/scope.py)): compara a pergunta com 25 perguntas-exemplo do domínio e 25 de fora dele (média dos 3 vizinhos mais próximos de cada grupo). Comparar pergunta com pergunta é uma tarefa simétrica, que o E5 separa bem: todas as perguntas fora do escopo tiveram margem negativa. Os exemplos **não** incluem perguntas dos conjuntos de avaliação.
 - **Por que "margem < 0 **e** sem suporte lexical"**: frases afirmativas como "Recebi tudo certinho" ficam com margem levemente negativa (−0,015), mas aparecem em centenas de avaliações. O suporte lexical evita a recusa indevida.

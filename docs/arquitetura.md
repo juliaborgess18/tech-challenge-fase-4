@@ -4,7 +4,7 @@
 
 ```mermaid
 flowchart TB
-    subgraph OFF["Offline — construção da base (scripts/)"]
+    subgraph OFF["Offline: construção da base (scripts/)"]
         A[CSVs Olist<br/>data/raw] --> B[loader.py<br/>join reviews + pedidos + produtos]
         B --> C[cleaning.py<br/>dedup · normalização · ausentes · seleção]
         C --> D[documents.py<br/>1 doc = 1 avaliação + metadados]
@@ -12,7 +12,7 @@ flowchart TB
         E --> F[(vectorstore<br/>embeddings.npy + documents.parquet)]
     end
 
-    subgraph ON["Online — pergunta → resposta (pipeline.py)"]
+    subgraph ON["Online: pergunta → resposta (pipeline.py)"]
         Q[Pergunta do usuário] --> P[query_processing.py<br/>normalização · filtros de metadados · expansão]
         P --> R1[Busca densa<br/>E5 query: + cosseno]
         P --> R2[BM25<br/>termos exatos]

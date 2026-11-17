@@ -176,7 +176,7 @@ class VoCPipeline:
         if not generate or not self.llm.is_configured:
             trace.timings_ms = timer.timings
             msg = (
-                "LLM não configurado — exibindo apenas as avaliações recuperadas. "
+                "LLM não configurado: exibindo apenas as avaliações recuperadas. "
                 "Configure LLM_API_KEY e LLM_MODEL no arquivo .env (local) ou nos Secrets do Streamlit Cloud."
                 if generate
                 else "Modo somente recuperação."

@@ -15,7 +15,7 @@ class AnswerStatus(str, Enum):
 
 @dataclass
 class Evidence:
-    evidence_id: str  # "E1", "E2"... — rótulo usado nas citações da resposta
+    evidence_id: str  # rótulo usado nas citações da resposta ("E1", "E2"...)
     review_id: str
     order_id: str
     text: str
@@ -34,7 +34,7 @@ class Evidence:
 
 @dataclass
 class RetrievalTrace:
-    """Registro de cada etapa — permite demonstrar o pipeline e depurar."""
+    """Registro de cada etapa, para demonstrar o pipeline e depurar."""
 
     original_question: str = ""
     processed_query: dict = field(default_factory=dict)

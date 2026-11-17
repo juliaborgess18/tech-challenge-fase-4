@@ -49,7 +49,7 @@ def select_evidence(
     1. mantém candidatos com similaridade >= min_relevance
     2. colapsa textos idênticos (contando as repetições)
     3. textos muito curtos ("insatisfeito", "ótimo") vão para o fim da fila: confirmam o tema,
-       mas não explicam o PORQUÊ — usados só se faltarem evidências mais informativas
+       mas não explicam o PORQUÊ; usados só se faltarem evidências mais informativas
     4. MMR (Maximal Marginal Relevance): escolhe iterativamente o candidato que maximiza
        λ·relevância − (1−λ)·similaridade com os já escolhidos, para o contexto cobrir
        padrões DIFERENTES em vez de 15 variações de "atraso na entrega"

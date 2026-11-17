@@ -45,7 +45,7 @@ Não removemos stopwords nem aplicamos stemming no texto embedado: modelos de em
 | `review_comment_message` / `title` | ~59% sem texto | Avaliações sem nenhum dos dois **saem da base de conhecimento**: não há o que recuperar. Se só um existe, ele é usado. |
 | `order_delivered_customer_date` | ausente em pedidos não entregues/cancelados | `delivery_status` = `nao_entregue` ou `cancelado` (derivado do `order_status`) e `delivery_delay_days` = NaN |
 | `product_category_name` | ausente em alguns produtos | `"sem_categoria"` (pt) / `"unknown"` (en) |
-| `order_purchase_timestamp` | — | se ausente, o período (`year_month`) usa a data da avaliação |
+| `order_purchase_timestamp` | - | se ausente, o período (`year_month`) usa a data da avaliação |
 | `customer_state`, `order_status` | raros | `"NA"` / `"desconhecido"` |
 
 ## 5. Duplicidades

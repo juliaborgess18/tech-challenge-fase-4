@@ -20,7 +20,7 @@ dependencies = [
 ]
 
 [project.optional-dependencies]
-# SDK do provedor de LLM (Google Gemini) — ver src/voc_rag/generation/llm.py
+# SDK do provedor de LLM (Google Gemini); ver src/voc_rag/generation/llm.py
 llm = ["google-genai>=1.0"]
 dev = ["pytest>=8", "ipykernel", "matplotlib"]
 data = ["kaggle>=1.6"]

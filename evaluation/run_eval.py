@@ -1,6 +1,6 @@
 """Avaliação do pipeline RAG.
 
-Métricas (calculadas sem LLM — não gastam tokens):
+Métricas (calculadas sem LLM, não gastam tokens):
   - guardrail_accuracy: % de perguntas com a decisão correta (responder vs. recusar)
   - precision@k (proxy): fração das evidências cujo texto casa com o regex do tema
   - filter_accuracy: % das perguntas com filtros esperados extraídos corretamente

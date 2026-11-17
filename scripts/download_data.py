@@ -1,9 +1,9 @@
 """Baixa o Brazilian E-Commerce Public Dataset by Olist para data/raw/.
 
-Opção A — Kaggle API (requer `pip install kaggle` e o token em ~/.kaggle/kaggle.json):
+Opção A: Kaggle API (requer `pip install kaggle` e o token em ~/.kaggle/kaggle.json):
     python scripts/download_data.py
 
-Opção B — manual:
+Opção B (manual):
     1. Baixe o zip em https://www.kaggle.com/datasets/olistbr/brazilian-ecommerce
     2. Extraia os CSVs em data/raw/
     (ou use: python scripts/download_data.py --from-dir CAMINHO/DA/PASTA/EXTRAIDA)

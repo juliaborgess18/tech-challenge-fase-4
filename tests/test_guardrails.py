@@ -42,7 +42,7 @@ def test_negative_margin_without_lexical_support_is_out_of_scope():
 
 
 def test_negative_margin_with_strong_lexical_support_is_allowed():
-    # ex.: "Recebi tudo certinho" — frase afirmativa, mas muito presente na base
+    # ex.: "Recebi tudo certinho": frase afirmativa, mas muito presente na base
     d = decide(scope_margin=-0.015, lexical_support=500)
     assert d.allowed
 

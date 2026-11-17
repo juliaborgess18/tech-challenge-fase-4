@@ -161,5 +161,5 @@ def validate_answer(answer: str, valid_ids: set[str]) -> tuple[str, AnswerStatus
             text = text.replace(f"[{cid}]", "")
     valid = cited & valid_ids
     if not valid:
-        warnings.append("a resposta não cita nenhuma evidência — verifique a fundamentação")
+        warnings.append("a resposta não cita nenhuma evidência; verifique a fundamentação")
     return text, AnswerStatus.ANSWERED, valid, warnings

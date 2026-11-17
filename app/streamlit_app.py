@@ -1,4 +1,4 @@
-"""Interface de demonstração — Voice of Customer Intelligence.
+"""Interface de demonstração: Voice of Customer Intelligence.
 
 Executar:
     streamlit run app/streamlit_app.py
@@ -187,7 +187,7 @@ with st.sidebar:
         key="use_llm",
         help=(
             "Ligado: o Gemini escreve a resposta citando as avaliações [E1], [E2]…\n\n"
-            "Desligado: só a recuperação — mostra as avaliações encontradas e o trace, sem chamar o LLM "
+            "Desligado: só a recuperação. Mostra as avaliações encontradas e o trace, sem chamar o LLM "
             "(não gasta cota)."
             if llm_ready
             else "Configure LLM_API_KEY e LLM_MODEL (no .env ou nos Secrets) para ativar."
@@ -235,7 +235,7 @@ if run and question.strip():
         # o usuário desligou o Gemini de propósito
         st.info("Somente recuperação (Gemini desligado)")
         st.markdown(
-            "Abaixo estão as avaliações que a busca encontrou — exatamente o contexto que seria enviado ao Gemini. "
+            "Abaixo estão as avaliações que a busca encontrou, exatamente o contexto que seria enviado ao Gemini. "
             "Ligue **Gerar resposta com o Gemini** na barra lateral para ver a resposta escrita com as citações."
         )
     else:

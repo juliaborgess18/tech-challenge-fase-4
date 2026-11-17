@@ -37,7 +37,7 @@ def normalize_text(value: object) -> str:
 def is_informative(text: str, min_letters: int = MIN_LETTERS) -> bool:
     """Um texto é útil para o RAG se tiver ao menos `min_letters` letras.
 
-    Descarta comentários como ".", "10", "!!!" — sem conteúdo semântico.
+    Descarta comentários como ".", "10", "!!!", sem conteúdo semântico.
     """
     return len(_LETTER.findall(text)) >= min_letters
 

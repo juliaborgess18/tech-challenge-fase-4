@@ -2,7 +2,7 @@
 
 Os filtros são aplicados ANTES da busca vetorial (pre-filtering). Isso garante que,
 por exemplo, "problemas em avaliações com nota baixa" recupere apenas avaliações
-nota 1-2, em vez de depender de o embedding "entender" a nota — informação que
+nota 1-2, em vez de depender de o embedding "entender" a nota, informação que
 NÃO está no texto do comentário.
 """
 

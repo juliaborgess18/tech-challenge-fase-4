@@ -88,7 +88,7 @@ CATEGORY_ALIASES: dict[str, list[str]] = {
 }
 
 
-# Enquadramento analítico/meta da pergunta (sem acento, minúsculas) — removido do núcleo
+# Enquadramento analítico/meta da pergunta (sem acento, minúsculas), removido do núcleo
 META_WORDS = set(
     """a o as os ao aos e de do da dos das em no na nos nas um uma uns umas que se me te
     qual quais quem como onde quando porque por pelo pela pelos pelas para pra com sem sobre entre
