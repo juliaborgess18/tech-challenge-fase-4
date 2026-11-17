@@ -43,7 +43,9 @@ class LLMClient:
     def generate(self, system_prompt: str, user_prompt: str) -> str:
         """Gera a resposta a partir do prompt de sistema e do prompt com as evidências."""
         if not self.is_configured:
-            raise LLMNotConfiguredError("Defina LLM_API_KEY e LLM_MODEL no arquivo .env.")
+            raise LLMNotConfiguredError(
+                "Defina LLM_API_KEY e LLM_MODEL no arquivo .env (local) ou nos Secrets do Streamlit Cloud."
+            )
         return self._call_api(system_prompt, user_prompt)
 
     def _call_api(self, system_prompt: str, user_prompt: str) -> str:

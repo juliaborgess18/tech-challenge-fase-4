@@ -6,7 +6,9 @@ Executar:
 
 from __future__ import annotations
 
+import hashlib
 import math
+import os
 import threading
 import time
 
@@ -20,6 +22,20 @@ from voc_rag.pipeline import VoCPipeline
 from voc_rag.retrieval import CrossEncoderReranker, MetadataFilter
 
 st.set_page_config(page_title="Voice of Customer RAG", page_icon="💬", layout="wide")
+
+
+def secrets_to_env() -> None:
+    """No Streamlit Cloud a configuração vem dos Secrets (não há .env): copia para o ambiente,
+    onde o config.py lê. Localmente o .env tem prioridade e, sem secrets.toml, nada acontece."""
+    try:
+        for key, value in st.secrets.items():
+            if isinstance(value, (str, int, float, bool)) and not os.environ.get(key):
+                os.environ[key] = str(value)
+    except Exception:  # sem secrets.toml (execução local)
+        pass
+
+
+secrets_to_env()
 
 EXAMPLES = {
     "Investigação de reclamações": "Quais são os principais problemas relatados pelos clientes em suas avaliações?",
@@ -69,7 +85,8 @@ def load_embedder() -> SentenceTransformerEmbedder:
 
 
 @st.cache_resource(show_spinner=False)
-def build_pipeline(_store: VectorStore, _embedder: SentenceTransformerEmbedder) -> VoCPipeline:
+def build_pipeline(_store: VectorStore, _embedder: SentenceTransformerEmbedder, llm_fingerprint: str) -> VoCPipeline:
+    # llm_fingerprint só entra na chave do cache: se a chave/modelo mudarem nos Secrets, o pipeline é refeito
     s = get_settings()
     llm = LLMClient(s.llm_api_key, s.llm_model, s.llm_max_tokens, s.llm_thinking_budget)
     reranker = CrossEncoderReranker(s.reranker_model) if s.use_reranker else None
@@ -82,7 +99,9 @@ def load_pipeline_with_progress() -> VoCPipeline:
     bar.progress(33, text="Carregando o modelo de embeddings... (etapa 2 de 3)")
     embedder = load_embedder()
     bar.progress(66, text="Preparando a busca e a conexão com o Gemini... (etapa 3 de 3)")
-    pipeline = build_pipeline(store, embedder)
+    s = get_settings()
+    fingerprint = hashlib.sha256(f"{s.llm_api_key}|{s.llm_model}|{s.llm_thinking_budget}".encode()).hexdigest()[:12]
+    pipeline = build_pipeline(store, embedder, fingerprint)
     bar.progress(100, text="Pronto!")
     bar.empty()
     return pipeline
