@@ -25,7 +25,9 @@ def test_vectorstore_save_load(store, tmp_path):
     store.save(tmp_path)
     loaded = type(store).load(tmp_path, expected_model="fake")
     assert len(loaded) == len(store)
-    assert np.allclose(loaded.embeddings, store.embeddings)
+    # salvo em float16 (metade do tamanho): volta como float32, com arredondamento pequeno
+    assert loaded.embeddings.dtype == np.float32
+    assert np.allclose(loaded.embeddings, store.embeddings, atol=1e-3)
 
 
 def test_hybrid_retrieval_finds_delivery_reviews(store, embedder):

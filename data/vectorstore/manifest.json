@@ -1,0 +1,6 @@
+{
+  "embedding_model": "intfloat/multilingual-e5-small",
+  "n_documents": 41951,
+  "dimension": 384,
+  "created_at": "2026-11-12T12:31:02+00:00"
+}

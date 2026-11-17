@@ -14,7 +14,7 @@ Para escalar (milhões de avaliações), a interface `search(query_vec, k, mask)
 pode ser reimplementada sobre FAISS/Qdrant/pgvector sem mudar o resto do pipeline.
 
 Arquivos gerados em data/vectorstore/:
-    embeddings.npy       matriz float32 [n_docs, dim], linhas alinhadas a documents.parquet
+    embeddings.npy       matriz [n_docs, dim] salva em float16 (carregada como float32), linhas alinhadas a documents.parquet
     documents.parquet    documentos + metadados
     manifest.json        modelo de embedding, dimensão, contagem, data de criação
 """
@@ -61,7 +61,9 @@ class VectorStore:
     def save(self, directory: Path) -> None:
         directory = Path(directory)
         directory.mkdir(parents=True, exist_ok=True)
-        np.save(directory / "embeddings.npy", self.embeddings)
+        # float16 em disco: metade do tamanho (~32 MB), cabe no GitHub para o deploy.
+        # Ao carregar, volta para float32; a perda de precisão não altera a busca (ver avaliação).
+        np.save(directory / "embeddings.npy", self.embeddings.astype(np.float16))
         self.documents.to_parquet(directory / "documents.parquet", index=False)
         manifest = {
             **self.manifest,

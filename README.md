@@ -105,6 +105,8 @@ python scripts/download_data.py --from-dir /caminho/para/archive
 
 ### 3. Construir a base de conhecimento e o índice
 
+> O índice pronto (`data/vectorstore/`, cerca de 38 MB) já vem no repositório. Para só **usar** o app, pule esta etapa e a etapa 2. Ela só é necessária para reconstruir a base a partir dos CSVs.
+
 ```bash
 python scripts/build_knowledge_base.py   # menos de 1 min → data/processed/documents.parquet
 python scripts/build_index.py            # cerca de 9 min em CPU de 14 núcleos (só na primeira vez) → data/vectorstore/
@@ -150,6 +152,20 @@ python evaluation/run_eval.py --questions evaluation/questions_holdout.yaml # co
 python evaluation/run_eval.py --with-llm                                   # inclui a geração e a taxa de citação
 python scripts/generate_examples.py                                        # regenera docs/exemplos.md
 ```
+
+### 7. Deploy no Streamlit Community Cloud
+
+1. Em [share.streamlit.io](https://share.streamlit.io), crie o app apontando para este repositório, branch `main` e arquivo `app/streamlit_app.py`. As dependências são instaladas pelo `requirements.txt`, que no Linux usa o PyTorch só-CPU.
+2. Em **Settings → Secrets**, cadastre a configuração do LLM, que localmente fica no `.env`:
+
+   ```toml
+   LLM_API_KEY = "sua-chave-do-gemini"
+   LLM_MODEL = "gemini-3.5-flash-lite"
+   LLM_THINKING_BUDGET = "-1"
+   ```
+
+   O Streamlit expõe essas chaves como variáveis de ambiente, que o [`config.py`](src/voc_rag/config.py) já lê. Sem elas, o app funciona em modo "somente recuperação".
+3. O índice versionado em `data/vectorstore/` é carregado direto. O modelo de embeddings é baixado do Hugging Face na primeira execução, então o primeiro carregamento demora um pouco mais.
 
 ## Estratégia do pipeline RAG
 
@@ -253,7 +269,7 @@ Resumo (detalhes e alternativas consideradas em [docs/decisoes_tecnicas.md](docs
 
 ```
 ├── app/streamlit_app.py          # interface de demonstração
-├── data/                         # raw/ processed/ vectorstore/ (não versionados)
+├── data/                         # raw/ e processed/ (não versionados) · vectorstore/ (índice pronto, versionado)
 ├── docs/                         # arquitetura, decisões, preparação, exemplos
 │   └── apresentacao/             # slides (.pptx) e fundo para a gravação do vídeo
 ├── evaluation/                   # perguntas de teste + script de métricas

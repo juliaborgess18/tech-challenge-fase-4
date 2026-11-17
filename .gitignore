@@ -1,8 +1,9 @@
 # Dados (baixar via scripts/download_data.py ou Kaggle)
 data/raw/*
 data/processed/*
-data/vectorstore/*
 !data/**/.gitkeep
+# data/vectorstore/ É versionado (~38 MB): o deploy no Streamlit Cloud usa o índice pronto,
+# sem precisar do dataset do Kaggle nem rodar build_index.py.
 
 # Segredos
 .env
